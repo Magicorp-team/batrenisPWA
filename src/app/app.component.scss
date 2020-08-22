@@ -1,0 +1,17 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.main-drawer-container {
+  height: calc(100% - 64px);
+}
+
+@media (max-width: 599px) {
+  .main-drawer-container {
+    height: calc(100% - 56px);
+  }
+}
+
+.active {
+  background-color: rgba(150, 150, 150, 0.2);
+}
