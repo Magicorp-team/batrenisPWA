@@ -1,0 +1,28 @@
+.page-content {
+  display: block;
+}
+
+mat-tab-group {
+  margin: 8px auto;
+  max-width: 1000px;
+}
+
+@media (max-width: 1000px) {
+  mat-tab-group {
+    margin: 8px;
+    max-width: 1000px;
+  }
+}
+
+.flex-col {
+  flex-direction: column;
+  float: left;
+}
+
+@media (max-width: 599px) {
+  .flex-col {
+    flex-direction: column;
+    float: left;
+    width: 100% !important;
+  }
+}

@@ -4,7 +4,7 @@
       <mat-icon>menu</mat-icon>
     </button>
     <span>{{ title | titlecase }}</span>
-    <span class="example-spacer"></span>
+    <span class="spacer"></span>
     <mat-slide-toggle [checked]="isDarkTheme | async" (change)="toggleDarkTheme($event.checked)">Dark theme</mat-slide-toggle>
     <button mat-icon-button aria-label="Menu">
       <mat-icon>more_vert</mat-icon>
@@ -14,6 +14,9 @@
     <mat-drawer #drawer mode="{{ breakpointObserver.isMatched('(max-width: 599px)')? 'over' : 'side' }}">
       <mat-nav-list style="width:240px">
         <a mat-list-item routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+        <a mat-list-item *ngIf="authService.getToken()" routerLink="/news" routerLinkActive="active">News</a>
+        <a mat-list-item *ngIf="authService.getToken()" routerLink="/servers" routerLinkActive="active">Servers</a>
+        <a mat-list-item *ngIf="authService.getToken()" routerLink="/roles" routerLinkActive="active">Roles</a>
         <mat-divider></mat-divider>
         <a mat-list-item href="https://www.magicorp.fr" routerLinkActive="active">Magicorp</a>
         <a mat-list-item href="https://code.magicorp.fr" routerLinkActive="active">Code</a>
@@ -22,6 +25,7 @@
         <a mat-list-item *ngIf="authService.getToken()" href="https://www.magicorp.fr/signout" routerLinkActive="active">Sign out</a>
       </mat-nav-list>
     </mat-drawer>
+    <p>le message : test <button onclick="this.parentNode.parentNode.removeChild(this.parentNode);">X</button></p>
     <router-outlet></router-outlet>
   </mat-drawer-container>
 </span>

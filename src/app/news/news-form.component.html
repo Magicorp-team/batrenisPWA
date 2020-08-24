@@ -1,0 +1,23 @@
+<mat-card>
+  <form [formGroup]="newsForm" (ngSubmit)="onSubmit()" align="center">
+    <mat-card-content>
+      <mat-form-field appearance="fill" style="display:flex;">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title" #title minLength="1" maxlength="40" required>
+        <mat-icon matSuffix>title</mat-icon>
+        <mat-hint align="end">{{title.value?.length || 0}}/40</mat-hint>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="fill" style="margin-top:8px;width: 100%;">
+        <mat-label>Content</mat-label>
+        <textarea matInput formControlName="content" #content required></textarea>
+        <mat-icon matSuffix>title</mat-icon>
+      </mat-form-field>
+      <p>{{ authMsg }}</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button type="reset">Cancel</button>
+      <button mat-raised-button type="submit" [disabled]="!newsForm.valid">Save</button>
+    </mat-card-actions>
+  </form>
+</mat-card>

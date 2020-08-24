@@ -8,13 +8,16 @@ import { AuthService } from '../service/auth.service';
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (this.authService.getToken()) return true;
-    return this.router.parseUrl('https://www.magicorp.fr/signin?lastUrl=' + state.url);
+    window.location.href = 'https://www.magicorp.fr/signin?lastUrl=https://batrenis.magicorp.fr' + state.url;
   }
 
 }

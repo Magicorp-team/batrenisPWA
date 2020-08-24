@@ -1,0 +1,26 @@
+<div class="page-content">
+  <app-news-form></app-news-form>
+  <mat-card *ngFor="let news of allNews">
+    <mat-card-header>
+      <mat-card-title>{{ news.title }}</mat-card-title>
+      <span class="spacer"></span>
+      <button mat-icon-button [matMenuTriggerFor]="newsMoreMenu" aria-label="More">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content style="padding-top:16px;">
+      {{ news.content }}
+    </mat-card-content>
+  </mat-card>
+  <mat-menu #newsMoreMenu="matMenu" xPosition="before" yPosition="below" width="1">
+    <button mat-menu-item>
+      <mat-icon>edit</mat-icon>
+      <span>Edit</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>delete_forever</mat-icon>
+      <span>Delete</span>
+    </button>
+  </mat-menu>
+</div>

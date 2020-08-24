@@ -1,0 +1,16 @@
+<div class="page-content">
+  <button mat-button>Add server</button>
+  <mat-grid-list cols="5" rowHeight="20:10">
+    <mat-grid-tile class="servercard" *ngFor="let server of servers" [colspan]="1" [rowspan]="1">
+      <a href='/server/{{ server.id }}'>
+        <h2>
+          <h3>{{ server.name }}</h3>
+          <span class="{{ server.status == 'active'? 'serveron' : 'serveroff' }}"></span>
+        </h2>
+        <p>
+          {{ server.description }}
+        </p>
+      </a>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

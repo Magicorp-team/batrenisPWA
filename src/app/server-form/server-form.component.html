@@ -1,0 +1,75 @@
+<script type="text/ng-template" id="addServerDialog.tmpl.html">
+  <div class="md-dialog-container" id="addServerDialog">
+      <md-dialog class="md-block" style="width:100%">
+          <form>
+              <md-toolbar>
+                  <div class="md-toolbar-tools">
+                      <h2>add / edit server</h2>
+                      <span flex></span>
+                      <md-button class="md-icon-button" ng-click="cancel()">
+                          <md-icon md-svg-src="img/icons/baseline-close-24px.svg" aria-label="Close add server"></md-icon>
+                      </md-button>
+                  </div>
+              </md-toolbar>
+              <md-dialog-content layout-padding>
+                  <div layout-gt-sm="row">
+                      <md-input-container class="md-block" flex-gt-sm>
+                          <label>Nom</label>
+                          <input ng-model="name">
+                      </md-input-container>
+                      <md-input-container class="md-block" flex-gt-sm>
+                          <label>Nom du service</label>
+                          <input ng-model="serviceName">
+                      </md-input-container>
+                  </div>
+                  <md-input-container class="md-block" flex-gt-sm>
+                      <label>Description</label>
+                      <textarea ng-model="description" md-maxlength="150" rows="5" md-select-on-focus></textarea>
+                  </md-input-container>
+                  <div layout-gt-sm="row">
+                      <md-input-container class="md-block" flex-gt-sm>
+                          <label>Script</label>
+                          <input ng-model="scriptServer">
+                      </md-input-container>
+                      <md-input-container class="md-block" flex-gt-sm>
+                          <label>Hostname/Ip</label>
+                          <input ng-model="hostnameIp">
+                      </md-input-container>
+                  </div>
+                  <div layout-gt-sm="row">
+                      <md-input-container class="md-block">
+                          <md-switch class="md-primary" ng-model="backupActive">
+                              Activé les backup
+                          </md-switch>
+                      </md-input-container>
+                      <md-input-container class="md-block" flex-gt-sm>
+                          <label>Chemain du dossier backup</label>
+                          <input ng-model="backupLocation">
+                      </md-input-container>
+                  </div>
+                  <div layout-gt-sm="row">
+                      <md-input-container class="md-block">
+                          <md-switch class="md-primary" ng-model="autorestartActive">
+                              Redémarrage automatique
+                          </md-switch>
+                      </md-input-container>
+                      <md-input-container class="md-block">
+                          <label>Heurs de redémarrage</label>
+                          <input ng-model="autorestartTime">
+                      </md-input-container>
+                  </div>
+              </md-dialog-content>
+
+              <md-dialog-actions layout="row">
+                  <span flex></span>
+                  <md-button ng-click="cancel()" >
+                      Annuler
+                  </md-button>
+                  <md-button ng-click="answer()" style="margin-right:20px;" >
+                      Ajouter
+                  </md-button>
+              </md-dialog-actions>
+          </form>
+      </md-dialog>
+  </div>
+</script>

@@ -1,0 +1,20 @@
+<div>
+  <section>
+      <div class="label">Id du serveur : {{ id }}</div>
+      <div class="label">Nom du serveur : {{ server.name }}</div>
+      <div class="label">Description du serveur : {{ server.description }}</div>
+      <div class="label">Host du serveur : {{ server.hostnameIp }}</div>
+      <div class="label">Backup activer : {{ server.backupActive }}</div>
+      <div class="label">Auto redémarage activer : {{ server.autorestartActive }}</div>
+      <div class="label">Poucentage CPU : </div>
+      <div class="label">Pourcentage RAM : </div>
+      <div class="label">RAM en octets : </div>
+      <div class="label">Heurs du redémarrage automatique : {{ server.autorestartTime }}</div>
+      <button mat-raised-button>Start</button>
+      <button mat-raised-button>Stop</button>
+      <h1>Serveur status : </h1>
+      <h1>Action msg : </h1>
+      <button mat-raised-button>Remove server</button>
+      <button mat-raised-button>Edit server</button>
+  </section>
+</div>
