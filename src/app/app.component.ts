@@ -9,7 +9,7 @@ import { Observable, Subject } from 'rxjs';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements AfterViewInit {
-  title = 'batrenis';
+  title = 'batrenis Beta';
   private _darkTheme = new Subject<boolean>();
   isDarkTheme: Observable<boolean> = this._darkTheme.asObservable();
 

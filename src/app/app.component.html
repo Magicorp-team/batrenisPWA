@@ -17,6 +17,7 @@
         <a mat-list-item *ngIf="authService.getToken()" routerLink="/news" routerLinkActive="active">News</a>
         <a mat-list-item *ngIf="authService.getToken()" routerLink="/servers" routerLinkActive="active">Servers</a>
         <a mat-list-item *ngIf="authService.getToken()" routerLink="/roles" routerLinkActive="active">Roles</a>
+        <a mat-list-item *ngIf="authService.getToken()" routerLink="/manage" routerLinkActive="active">Manage</a>
         <mat-divider></mat-divider>
         <a mat-list-item href="https://www.magicorp.fr" routerLinkActive="active">Magicorp</a>
         <a mat-list-item href="https://code.magicorp.fr" routerLinkActive="active">Code</a>
@@ -25,7 +26,7 @@
         <a mat-list-item *ngIf="authService.getToken()" href="https://www.magicorp.fr/signout" routerLinkActive="active">Sign out</a>
       </mat-nav-list>
     </mat-drawer>
-    <p>le message : test <button onclick="this.parentNode.parentNode.removeChild(this.parentNode);">X</button></p>
+    <p>This website use fonctionnai cookie <button onclick="this.parentNode.parentNode.removeChild(this.parentNode);">X</button></p>
     <router-outlet></router-outlet>
   </mat-drawer-container>
 </span>

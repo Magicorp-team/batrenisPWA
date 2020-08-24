@@ -8,6 +8,7 @@ import { NewsComponent } from '../news/news.component';
 import { ServersComponent } from '../servers/servers.component';
 import { ServerComponent } from '../server/server.component';
 import { RolesComponent } from '../roles/roles.component';
+import { ManageComponent } from '../manage/manage.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'servers', component: ServersComponent, canActivate: [AuthGuard] },
   { path: 'server/:id', component: ServerComponent, canActivate: [AuthGuard] },
   { path: 'roles', component: RolesComponent, canActivate: [AuthGuard] },
+  { path: 'manage', component: ManageComponent, canActivate: [AuthGuard] },
   { path: '**', component: PageNotFoundComponent }
 ];
 

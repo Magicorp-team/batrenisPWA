@@ -38,6 +38,9 @@ import { RolesComponent } from './roles/roles.component';
 import { ServersComponent } from './servers/servers.component';
 import { ServerComponent } from './server/server.component';
 import { ServerFormComponent } from './server-form/server-form.component';
+import { ServerTypeComponent } from './server-type/server-type.component';
+import { ActionsComponent } from './actions/actions.component';
+import { ManageComponent } from './manage/manage.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +52,10 @@ import { ServerFormComponent } from './server-form/server-form.component';
     RolesComponent,
     ServersComponent,
     ServerComponent,
-    ServerFormComponent
+    ServerFormComponent,
+    ServerTypeComponent,
+    ActionsComponent,
+    ManageComponent
   ],
   imports: [
     AppRoutingModule,

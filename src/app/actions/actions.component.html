@@ -1,0 +1,41 @@
+<form>
+  <mat-form-field appearance="fill" style="margin:4px;">
+    <mat-label>Action title</mat-label>
+    <input matInput #title minLength="1" maxlength="40" required> <!-- formControlName="titleF" -->
+    <mat-hint align="end">{{title.value?.length || 0}}/40</mat-hint>
+  </mat-form-field>
+  <mat-form-field appearance="fill" style="margin:4px;">
+    <mat-label>Action name</mat-label>
+    <input matInput #name minLength="1" maxlength="40" required> <!-- formControlName="nameF" -->
+    <mat-hint align="end">{{name.value?.length || 0}}/40</mat-hint>
+  </mat-form-field>
+  <mat-form-field appearance="fill" style="margin:4px;">
+    <mat-label>Action description</mat-label>
+    <input matInput #description minLength="1"> <!-- formControlName="nameF" -->
+  </mat-form-field>
+  <button mat-raised-button type="submit">Save</button> <!-- [disabled]="!newsForm.valid" -->
+</form>
+<mat-list>
+  <mat-list-item *ngFor="let action of actions" style="margin:16px;">
+    <div mat-line>
+      <p>{{ action.title }}</p>
+      <p>{{ action.name }}</p>
+    </div>
+    <p>{{ action.description }}</p>
+    <span class="spacer"></span>
+    <button mat-icon-button [matMenuTriggerFor]="actionMoreMenu" aria-label="More">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+  </mat-list-item>
+</mat-list>
+
+<mat-menu #actionMoreMenu="matMenu" xPosition="before" yPosition="below" width="1">
+  <button mat-menu-item>
+    <mat-icon>edit</mat-icon>
+    <span>Edit</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>delete_forever</mat-icon>
+    <span>Delete</span>
+  </button>
+</mat-menu>
