@@ -1,3 +1,4 @@
 export class ServerType {
-  title: string
+  id: number | null;
+  title: string;
 }
