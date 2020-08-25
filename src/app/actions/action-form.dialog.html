@@ -1,0 +1,23 @@
+<form [formGroup]="actionForm">
+  <h1 mat-dialog-title>Update action</h1>
+  <div mat-dialog-content>
+    <mat-form-field appearance="fill" style="margin:4px;">
+      <mat-label>Action title</mat-label>
+      <input matInput #title formControlName="title" [(ngModel)]="data.title" value="{{ data.title }}" minLength="1" maxlength="40" required>
+      <mat-hint align="end">{{title.value?.length || 0}}/40</mat-hint>
+    </mat-form-field>
+    <mat-form-field appearance="fill" style="margin:4px;">
+      <mat-label>Action name</mat-label>
+      <input matInput #name formControlName="name" [(ngModel)]="data.name" value="{{ data.name }}" minLength="1" maxlength="40" required>
+      <mat-hint align="end">{{name.value?.length || 0}}/40</mat-hint>
+    </mat-form-field>
+    <mat-form-field appearance="fill" style="margin:4px;">
+      <mat-label>Action description</mat-label>
+      <input matInput #description formControlName="description" [(ngModel)]="data.description" value="{{ data.description }}" minLength="1">
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button type="submit" [mat-dialog-close]="data" [disabled]="!actionForm.valid" cdkFocusInitial>Save</button>
+ </div>
+</form>

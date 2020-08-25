@@ -6,6 +6,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
@@ -39,7 +40,7 @@ import { ServersComponent } from './servers/servers.component';
 import { ServerComponent } from './server/server.component';
 import { ServerFormComponent } from './server-form/server-form.component';
 import { ServerTypeComponent } from './server-type/server-type.component';
-import { ActionsComponent } from './actions/actions.component';
+import { ActionsComponent, ActionFormDialog } from './actions/actions.component';
 import { ManageComponent } from './manage/manage.component';
 
 @NgModule({
@@ -55,6 +56,7 @@ import { ManageComponent } from './manage/manage.component';
     ServerFormComponent,
     ServerTypeComponent,
     ActionsComponent,
+    ActionFormDialog,
     ManageComponent
   ],
   imports: [
@@ -67,6 +69,7 @@ import { ManageComponent } from './manage/manage.component';
     MatButtonModule,
     MatCardModule,
     MatChipsModule,
+    MatDialogModule,
     MatDividerModule,
     MatGridListModule,
     MatIconModule,
