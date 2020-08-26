@@ -17,6 +17,7 @@ export class Server {
   serverEnv: ServerEnv[] | null;
   hostname: string | null;
   backupActive: boolean | null;
+  backupLocation: string | null;
   autorestartActive: boolean | null;
   autorestartTime: string | null;
   type: string;

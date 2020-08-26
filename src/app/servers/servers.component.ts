@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition, MatSnackBar } from '@angular/material/snack-bar';
+import { ServerService } from '../service/server.service'
+import { Server } from '../class/server';
+import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ServerFormComponent } from '../server-form/server-form.component';
 
 @Component({
   selector: 'app-servers',
@@ -7,24 +13,52 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ServersComponent implements OnInit {
 
-  servers = [
-    {
-      id: 1,
-      name: "toto",
-      description: "le server de toto",
-      status: "active"
-    },
-    {
-      id: 2,
-      name: "toto dead",
-      description: "le server de toto dead",
-      status: "dead"
-    }
-  ];
+  horizontalPosition: MatSnackBarHorizontalPosition = 'start';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+  servers: Server[];
 
-  constructor() { }
+  constructor(
+    private serverService: ServerService,
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
+    this.getServers();
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 4000,
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition
+    });
+  }
+
+  getServers(): void {
+    this.serverService.getServers().subscribe(
+      servers => {
+        this.servers = servers
+      },
+      error => this.openSnackBar(`Error on get servers (${error})`, "ok")
+    );
+  }
+
+  createServers(server: Server) {
+    this.serverService.createServer(server).subscribe(
+      _ => {
+        this.getServers();
+        this.openSnackBar("Server created with success", "ok");
+      },
+      error => this.openSnackBar(`Error on create server (${error})`, "ok")
+    );
+  }
+
+  openActionDialog() {
+    this.dialog.open(ServerFormComponent).afterClosed().subscribe(newServer => {
+      if (newServer) this.getServers();
+    });
   }
 
 }

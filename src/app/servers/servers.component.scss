@@ -1,14 +1,24 @@
 .page-content {
   display: block;
+  margin: 16px;
 }
 
 .servercard {
   background-color: white;
+  border-radius: 8px;
   box-shadow: 0 1px 5px 0 rgba(0,0,0,0.2), 0 1px 5px 0px rgba(0,0,0,0.2), 0 1px 5px 0 rgba(0,0,0,0.2);
 }
 
 .servercard:hover{
   box-shadow: 0 1px 10px 0 rgba(0,0,0,0.2), 0 1px 10px 0px rgba(0,0,0,0.2), 0 1px 10px 0 rgba(0,0,0,0.2);
+}
+
+.servertitle{
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  left: 8px;
+  top: 8px;
 }
 
 .serveroff{
