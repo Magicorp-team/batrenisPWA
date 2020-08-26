@@ -68,7 +68,11 @@ export class RoleService {
     }
     if (!error.status) return throwError(`Server connexion error : ${error.statusText}`);
     if (error.status == 400)
-      return throwError(`${error.error.msg} because ${error.error.errors}`);
+      return throwError(
+        `${error.error.msg} because : ` +
+        error.error.errors.reduce((acc: string, i: any) => (acc = acc + `, ${i.message}`, acc), "")
+          .replace(/^\,\s/, '')
+      );
     return throwError(`${error.error.msg}`);
   }
 

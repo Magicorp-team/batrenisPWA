@@ -2,6 +2,14 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Server } from '../class/server';
 import { ServerType } from '../class/server-type';
+import { User } from '../class/user';
+import { Action } from '../class/action';
+import { ActionService } from '../service/action.service';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { UserService } from '../service/user.service';
+import { ServerTypeService } from '../service/server-type.service';
+import { ServerService } from '../service/server.service';
+import { MatDialogRef } from '@angular/material/dialog';
 
 interface Env {
   key: string;
@@ -15,15 +23,14 @@ interface Env {
 })
 export class ServerFormComponent implements OnInit, AfterViewInit {
 
+  horizontalPosition: MatSnackBarHorizontalPosition = 'start';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   server: Server;
   envs: Env[];
-  serverTypes: ServerType[] = [
-    {
-      id: 1,
-      title: "Others"
-    }
-  ];
-  selectedServerType: ServerType;
+  serverTypes: ServerType[];
+  actions: Action[];
+  users: User[];
+  selectedServerType: ServerType;//
   serverForm = new FormGroup({
     title: new FormControl(''),
     name: new FormControl(''),
@@ -35,12 +42,25 @@ export class ServerFormComponent implements OnInit, AfterViewInit {
     serverType: new FormControl(''),
     hostname: new FormControl(''),
     serverInstallDir: new FormControl(''),
-    saveDir: new FormControl('')
+    saveDir: new FormControl(''),
+    actions: new FormControl(''),
+    managers: new FormControl('')
   });
 
-  constructor() { }
+  constructor(
+    private serverService: ServerService,
+    private actionService: ActionService,
+    private serverTypeService: ServerTypeService,
+    private userService: UserService,
+    private snackBar: MatSnackBar,
+    private dialogRef: MatDialogRef<ServerFormComponent>
+  ) { }
 
   ngOnInit(): void {
+    this.getActions();
+    this.getUsers();
+    this.getServerTypes();
+
     this.getEnvs();
   }
 
@@ -49,7 +69,6 @@ export class ServerFormComponent implements OnInit, AfterViewInit {
   }
 
   onChange(env: Env): void {
-    console.log(env);
     if (env.key.length == 0 && env.value.length == 0) {
       const index = this.envs.indexOf(env);
       if (index > -1) this.envs.splice(index, 1);
@@ -63,6 +82,10 @@ export class ServerFormComponent implements OnInit, AfterViewInit {
         i.parentNode["style"].margin = 0;
       }
     );
+  }
+
+  compareObjects(o1: any, o2: any): boolean {
+    return o1.id === o2.id;
   }
 
   onNewChange(input: any, isKey: boolean): void {
@@ -85,17 +108,76 @@ export class ServerFormComponent implements OnInit, AfterViewInit {
     }, 0.01);
   }
 
-  getEnvs(): void {
-    this.envs = [
-      {
-        key: "PORT",
-        value: "25566"
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 4000,
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition
+    });
+  }
+
+  getActions(): void {
+    this.actionService.getActions().subscribe(
+      actions => {
+        this.actions = actions
       },
-      {
-        key: "test",
-        value: "lol"
-      }
-    ]
+      error => this.openSnackBar(`Error on get actions (${error})`, "ok")
+    );
+  }
+
+  getUsers(): void {
+    this.userService.getUsers().subscribe(
+      users => {
+        this.users = users
+      },
+      error => this.openSnackBar(`Error on get users (${error})`, "ok")
+    );
+  }
+
+  getServerTypes(): void {
+    this.serverTypeService.getServerTypes().subscribe(
+      serverTypes => {
+        this.serverTypes = serverTypes
+      },
+      error => this.openSnackBar(`Error on get server types (${error})`, "ok")
+    );
+  }
+
+  getEnvs(): void {
+    this.envs = this.server? this.server.serverEnv : [];
+  }
+
+  createServers(server: Server) {
+    this.serverService.createServer(server).subscribe(
+      _ => {
+        this.openSnackBar("Server created with success", "ok");
+        this.dialogRef.close(true);
+      },
+      error => this.openSnackBar(`Error on create server (${error})`, "ok")
+    );
+  }
+
+  onSubmit(): void {
+    if (!this.server) {
+      let form = this.serverForm.value;
+      let newServer: Server = new Server();
+      newServer.title = form.title;
+      newServer.name = form.name;
+      newServer.description = form.description;
+      newServer.hostname = form.hostname;
+      newServer.serverInstallDir = form.serverInstallDir;
+      newServer.saveDir = form.saveDir;
+      newServer.backupActive = form.backupActive;
+      newServer.backupLocation = form.backupLocation;
+      newServer.autorestartActive = form.autorestartActive;
+      newServer.autorestartTime = form.autorestartTime == ''? null : form.autorestartTime;
+      newServer.type = form.serverType;
+      newServer.actions = form.actions.reduce((acc: Array<Number>, i: Action) => (acc.push(i.id), acc), []);
+      newServer.managers = form.managers.reduce((acc: Array<Number>, i: User) => (acc.push(i.id), acc), []);
+      newServer.serverEnv = this.envs;
+
+      this.createServers(newServer);
+    }
   }
 
 }

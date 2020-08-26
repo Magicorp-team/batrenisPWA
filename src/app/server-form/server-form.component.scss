@@ -12,3 +12,13 @@
     display: block;
   }
 }
+
+.longField {
+  width: 98%;
+}
+
+@media (max-width: 599px) {
+  .longField {
+    width: auto;
+  }
+}

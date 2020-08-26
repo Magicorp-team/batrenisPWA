@@ -45,16 +45,6 @@ export class ServersComponent implements OnInit {
     );
   }
 
-  createServers(server: Server) {
-    this.serverService.createServer(server).subscribe(
-      _ => {
-        this.getServers();
-        this.openSnackBar("Server created with success", "ok");
-      },
-      error => this.openSnackBar(`Error on create server (${error})`, "ok")
-    );
-  }
-
   openActionDialog() {
     this.dialog.open(ServerFormComponent).afterClosed().subscribe(newServer => {
       if (newServer) this.getServers();

@@ -1,4 +1,4 @@
-<form [formGroup]="serverForm">
+<form [formGroup]="serverForm" (ngSubmit)="onSubmit()">
   <h2 mat-dialog-title>{{ server? "Edit" : "Add" }} server</h2>
   <div mat-dialog-content class="server-form">
     <div>
@@ -11,16 +11,16 @@
       <mat-form-field appearance="fill" style="margin:4px;">
         <mat-label>Name</mat-label>
         <input matInput #name formControlName="name" [ngModel]="server? server.name:''" minLength="1" maxlength="40"
-          required>
+        required>
         <mat-hint align="end">{{name.value?.length || 0}}/40</mat-hint>
       </mat-form-field>
       <br>
-      <mat-form-field appearance="fill" style="margin:4px;">
+      <mat-form-field appearance="fill" class="longField" style="margin:4px;">
         <mat-label>Description</mat-label>
         <input matInput #description formControlName="description" [ngModel]="server? server.description:''">
       </mat-form-field>
       <br>
-      <mat-slide-toggle matInput #backupActive formControlName="backupActive" [ngModel]="server? server.backupActive:''"
+      <mat-slide-toggle matInput #backupActive formControlName="backupActive" [ngModel]="server? server.backupActive:false"
         style="margin:4px;">Backup active</mat-slide-toggle>
       <mat-form-field appearance="fill" style="margin:4px;">
         <mat-label>Backup location</mat-label>
@@ -28,19 +28,25 @@
           maxlength="200">
       </mat-form-field>
       <br>
-      <mat-slide-toggle matInput #autorestartActive formControlName="autorestartActive"
-        [ngModel]="server? server.autorestartActive:''" style="margin:4px;">Auto restart active</mat-slide-toggle>
-      <mat-form-field appearance="fill" style="margin:4px;">
-        <mat-label>Auto restart time</mat-label>
-        <input matInput #autorestartTime formControlName="autorestartTime" type="time"
-          [ngModel]="server? server.autorestartTime:''">
+      <mat-form-field appearance="fill" class="longField">
+        <mat-label>Actions</mat-label>
+        <mat-select [compareWith]="compareObjects" formControlName="actions" [ngModel]="server? server.actions:[]" multiple>
+          <mat-option *ngFor=" let action of actions" [value]="action">{{ action.title }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="fill" class="longField">
+        <mat-label>Managers</mat-label>
+        <mat-select [compareWith]="compareObjects" formControlName="managers" [ngModel]="server? server.managers:[]" multiple>
+          <mat-option *ngFor="let user of users" [value]="user">{{ user.username }}</mat-option>
+        </mat-select>
       </mat-form-field>
     </div>
     <div>
       <mat-form-field appearance="fill" style="margin:4px;">
         <mat-label>Server type</mat-label>
         <mat-select #serverType formControlName="serverType" [ngModel]="selectedServerType" required>
-          <mat-option *ngFor="let type of serverTypes" [value]="type.title">
+          <mat-option *ngFor="let type of serverTypes" [value]="type.id">
             {{ type.title }}
           </mat-option>
         </mat-select>
@@ -58,6 +64,14 @@
       <mat-form-field appearance="fill" style="margin:4px;">
         <mat-label>Save dir</mat-label>
         <input matInput #saveDir formControlName="saveDir" [ngModel]="server? server.saveDir:''" maxlength="200">
+      </mat-form-field>
+      <br>
+      <mat-slide-toggle matInput #autorestartActive formControlName="autorestartActive"
+        [ngModel]="server? server.autorestartActive:false" style="margin:4px;">Auto restart active</mat-slide-toggle>
+      <mat-form-field appearance="fill" style="margin:4px;">
+        <mat-label>Auto restart time</mat-label>
+        <input matInput #autorestartTime formControlName="autorestartTime" type="time"
+          [ngModel]="server? server.autorestartTime:''">
       </mat-form-field>
       <!-- [ngModel]="server? server.serverEnv:''" -->
       <div id="envCont" style="display: block;">
@@ -86,6 +100,6 @@
 
   <div mat-dialog-actions>
     <button mat-raised-button mat-dialog-close>Cancel</button>
-    <button mat-raised-button type="submit" [mat-dialog-close]="server" [disabled]="!serverForm.valid">Save</button>
+    <button mat-raised-button type="submit" [disabled]="!serverForm.valid">Save</button>
   </div>
 </form>
