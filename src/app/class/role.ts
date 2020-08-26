@@ -3,5 +3,5 @@ export class Role {
   title: string;
   name: string;
   description: string;
-  permissions: object | null;
+  permissions: string[];
 }

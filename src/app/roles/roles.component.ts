@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { UserService } from '../service/user.service'
+import { RoleService } from '../service/role.service'
+import { PermissionService } from '../service/permission.service'
+import { User } from '../class/user';
+import { Role } from '../class/role';
+import { Permission } from '../class/permission';
 
 @Component({
   selector: 'app-roles',
@@ -11,204 +17,130 @@ export class RolesComponent implements OnInit {
 
   horizontalPosition: MatSnackBarHorizontalPosition = 'start';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
-  rolesF = new FormControl();
-  roles = [
-    {
-      id: 1,
-      title: "Admin",
-      name: "admin",
-      description: "admin description"
-    },
-    {
-      id: 2,
-      title: "User",
-      name: "user",
-      description: "user description"
-    }
-  ];
+  users: User[];
+  roles: Role[];
+  permissions: Permission[];
+  selectedRole: Role;
 
-  titleF = new FormControl();
-  nameF = new FormControl();
-  permissions = [
-    {
-      id: 1,
-      title: "Add new servers",
-      name: "canAddServer",
-      description: null
-    },
-    {
-      id: 2,
-      title: "Add new actions",
-      name: "canAddAction",
-      description: null
-    },
-    {
-      id: 3,
-      title: "Edit servers",
-      name: "canEditAllServer",
-      description: null
-    },
-    {
-      id: 4,
-      title: "Remove actions",
-      name: "canDeleteAction",
-      description: null
-    },
-    {
-      id: 5,
-      title: "Manager all servers",
-      name: "canManageAllServer",
-      description: null
-    },
-    {
-      id: 6,
-      title: "Manager personal servers",
-      name: "canManageServer",
-      description: null
-    },
-    {
-      id: 7,
-      title: "Use all servers",
-      name: "canUseServer",
-      description: null
-    },
-    {
-      id: 8,
-      title: "See servers logs",
-      name: "canSeeAllServerLogs",
-      description: null
-    },
-    {
-      id: 9,
-      title: "See personal servers logs",
-      name: "canSeeServerLogs",
-      description: null
-    },
-    {
-      id: 10,
-      title: "Remove servers",
-      name: "canDeleteAllServer",
-      description: null
-    },
-    {
-      id: 11,
-      title: "See servers terminal",
-      name: "canSeeAllServerTerminal",
-      description: null
-    },
-    {
-      id: 12,
-      title: "See personal servers terminal",
-      name: "canSeeServerTerminal",
-      description: null
-    },
-    {
-      id: 13,
-      title: "Use servers terminal",
-      name: "canUseAllServerTerminal",
-      description: null
-    },
-    {
-      id: 14,
-      title: "Use personal servers terminal",
-      name: "cauUseServerTerminal",
-      description: null
-    },
-    {
-      id: 15,
-      title: "Manage roles",
-      name: "canManageRoles",
-      description: null
-    },
-    {
-      id: 16,
-      title: "Add news",
-      name: "canAddNews",
-      description: null
-    },
-    {
-      id: 17,
-      title: "Edit news",
-      name: "canEditNews",
-      description: null
-    },
-    {
-      id: 18,
-      title: "Remove news",
-      name: "canDeleteNews",
-      description: null
-    },
-    {
-      id: 19,
-      title: "See Issues",
-      name: "canViewIssues",
-      description: null
-    },
-    {
-      id: 20,
-      title: "See news",
-      name: "canViewNews",
-      description: null
-    },
-    {
-      id: 21,
-      title: "Add Issues",
-      name: "canAddIssues",
-      description: null
-    },
-    {
-      id: 22,
-      title: "Edit Issues",
-      name: "canEditIssues",
-      description: null
-    },
-    {
-      id: 23,
-      title: "Remove Issues",
-      name: "canDeleteIssues",
-      description: null
-    }
-  ];
-
-  users = [
-    {
-      id: 1,
-      username: "admin",
-      roles: [
-        {
-          id: 1,
-          title: "Admin",
-          name: "admin",
-          date: "2020-08-21T15:24:25.000Z"
-        },
-        {
-          id: 2,
-          title: "User",
-          name: "user",
-          date: "2020-08-21T15:24:37.000Z"
-        }
-      ]
-    },
-    {
-      id: 2,
-      username: "toto",
-      roles: []
-    }
-  ];
+  roleForm = new FormGroup({
+    title: new FormControl(''),
+    name: new FormControl(''),
+    description: new FormControl('')
+  });
 
   constructor(
-    private _snackBar: MatSnackBar
+    private userService: UserService,
+    private roleService: RoleService,
+    private permissionService: PermissionService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
+    this.getRoles();
+    this.getUsers();
+    this.getPermissions()
   }
 
-  run(): void {
-    this._snackBar.open('Cannonball!!', 'End now', {
-      duration: 3000,
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 4000,
       horizontalPosition: this.horizontalPosition,
-      verticalPosition: this.verticalPosition,
+      verticalPosition: this.verticalPosition
     });
+  }
+
+  getUsers(): void {
+    this.userService.getUsers().subscribe(
+      users => {
+        this.users = users
+      },
+      error => this.openSnackBar(`Error on get users (${error})`, "ok")
+    );
+  }
+
+  getRoles(): void {
+    this.roleService.getRoles().subscribe(
+      roles => {
+        this.roles = roles
+        if (roles.length > 0) this.getRole(roles[0]);
+      },
+      error => this.openSnackBar(`Error on get roles (${error})`, "ok")
+    );
+  }
+
+  updateUserRole(user: User): void {
+    this.userService.updateUserRole(user).subscribe(
+      _ => this.openSnackBar("User roles updated with success", "ok"),
+      error => {
+        this.openSnackBar(`Error on update user roles (${error})`, "ok");
+        this.getUsers();
+      }
+    );
+  }
+
+  getPermissions() {
+    this.permissionService.getPermissions().subscribe(
+      permissions => this.permissions = permissions,
+      error => this.openSnackBar(`Error on get permissions (${error})`, "ok")
+    );
+  }
+
+  getRole(role: Role): void {
+    this.roleService.getRole(role.id).subscribe(
+      resRole => {
+        resRole.id = role.id;
+        resRole.permissions = Object.keys(resRole.permissions);
+        this.permissions.map(i => i["selected"] = !!(resRole.permissions.find(p => p == i.name)))
+        this.selectedRole = resRole;
+      },
+      error => this.openSnackBar(`Error on get role (${error})`, "ok")
+    );
+  }
+
+  submitRole(): void {
+    let form = this.roleForm.value;
+    if (this.selectedRole) {
+      this.roleService.updateRole(
+        this.selectedRole.id,
+        form.title,
+        form.name,
+        form.description,
+        this.permissions
+      ).subscribe(
+        _ => {
+          this.getRoles();
+          this.openSnackBar("Role updated with success", "ok");
+        },
+        error => this.openSnackBar(`Error on update role (${error})`, "ok")
+      );
+    } else {
+      this.roleService.createRole(
+        form.title,
+        form.name,
+        form.description,
+        this.permissions
+      ).subscribe(
+        _ => {
+          this.getRoles();
+          this.openSnackBar("Role created with success", "ok");
+        },
+        error => this.openSnackBar(`Error on create role (${error})`, "ok")
+      );
+    }
+  }
+
+  deleteRole(role: Role): void {
+    this.roleService.deleteRole(role).subscribe(
+      _ => {
+        this.getRoles();
+        this.openSnackBar("Role deleted with success", "ok");
+      },
+      error => this.openSnackBar(`Error on delete role (${error})`, "ok")
+    );
+  }
+
+  compareObjects(o1: any, o2: any): boolean {
+    return o1.id === o2.id;
   }
 
 }
