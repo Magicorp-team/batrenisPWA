@@ -6,9 +6,7 @@
       <p>{{ server.description }}</p>
     </mat-grid-tile>
   </mat-grid-list>
-  <div style="position:fixed;bottom:50px;right:50px;">
-    <button mat-fab color="primary" matTooltip="Add server" aria-label="Add server" (click)="openActionDialog()">
-      <mat-icon>add</mat-icon>
-    </button>
-  </div>
+  <button mat-fab color="primary" matTooltip="Add server" style="position:fixed;bottom:50px;right:50px;" aria-label="Add server" (click)="openActionDialog()">
+    <mat-icon>add</mat-icon>
+  </button>
 </div>

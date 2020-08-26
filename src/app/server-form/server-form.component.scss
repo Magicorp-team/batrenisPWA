@@ -1,0 +1,14 @@
+#envCont {
+  overflow-y: auto;
+  max-height: 186px;
+}
+
+.server-form {
+  display: flex;
+}
+
+@media (max-width: 599px) {
+  .server-form {
+    display: block;
+  }
+}

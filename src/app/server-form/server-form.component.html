@@ -1,75 +1,91 @@
-<script type="text/ng-template" id="addServerDialog.tmpl.html">
-  <div class="md-dialog-container" id="addServerDialog">
-      <md-dialog class="md-block" style="width:100%">
-          <form>
-              <md-toolbar>
-                  <div class="md-toolbar-tools">
-                      <h2>add / edit server</h2>
-                      <span flex></span>
-                      <md-button class="md-icon-button" ng-click="cancel()">
-                          <md-icon md-svg-src="img/icons/baseline-close-24px.svg" aria-label="Close add server"></md-icon>
-                      </md-button>
-                  </div>
-              </md-toolbar>
-              <md-dialog-content layout-padding>
-                  <div layout-gt-sm="row">
-                      <md-input-container class="md-block" flex-gt-sm>
-                          <label>Nom</label>
-                          <input ng-model="name">
-                      </md-input-container>
-                      <md-input-container class="md-block" flex-gt-sm>
-                          <label>Nom du service</label>
-                          <input ng-model="serviceName">
-                      </md-input-container>
-                  </div>
-                  <md-input-container class="md-block" flex-gt-sm>
-                      <label>Description</label>
-                      <textarea ng-model="description" md-maxlength="150" rows="5" md-select-on-focus></textarea>
-                  </md-input-container>
-                  <div layout-gt-sm="row">
-                      <md-input-container class="md-block" flex-gt-sm>
-                          <label>Script</label>
-                          <input ng-model="scriptServer">
-                      </md-input-container>
-                      <md-input-container class="md-block" flex-gt-sm>
-                          <label>Hostname/Ip</label>
-                          <input ng-model="hostnameIp">
-                      </md-input-container>
-                  </div>
-                  <div layout-gt-sm="row">
-                      <md-input-container class="md-block">
-                          <md-switch class="md-primary" ng-model="backupActive">
-                              Activé les backup
-                          </md-switch>
-                      </md-input-container>
-                      <md-input-container class="md-block" flex-gt-sm>
-                          <label>Chemain du dossier backup</label>
-                          <input ng-model="backupLocation">
-                      </md-input-container>
-                  </div>
-                  <div layout-gt-sm="row">
-                      <md-input-container class="md-block">
-                          <md-switch class="md-primary" ng-model="autorestartActive">
-                              Redémarrage automatique
-                          </md-switch>
-                      </md-input-container>
-                      <md-input-container class="md-block">
-                          <label>Heurs de redémarrage</label>
-                          <input ng-model="autorestartTime">
-                      </md-input-container>
-                  </div>
-              </md-dialog-content>
-
-              <md-dialog-actions layout="row">
-                  <span flex></span>
-                  <md-button ng-click="cancel()" >
-                      Annuler
-                  </md-button>
-                  <md-button ng-click="answer()" style="margin-right:20px;" >
-                      Ajouter
-                  </md-button>
-              </md-dialog-actions>
-          </form>
-      </md-dialog>
+<form [formGroup]="serverForm">
+  <h2 mat-dialog-title>{{ server? "Edit" : "Add" }} server</h2>
+  <div mat-dialog-content class="server-form">
+    <div>
+      <mat-form-field appearance="fill" style="margin:4px;">
+        <mat-label>Title</mat-label>
+        <input matInput #title formControlName="title" [ngModel]="server? server.title:''" minLength="1" maxlength="40"
+          required>
+        <mat-hint align="end">{{title.value?.length || 0}}/40</mat-hint>
+      </mat-form-field>
+      <mat-form-field appearance="fill" style="margin:4px;">
+        <mat-label>Name</mat-label>
+        <input matInput #name formControlName="name" [ngModel]="server? server.name:''" minLength="1" maxlength="40"
+          required>
+        <mat-hint align="end">{{name.value?.length || 0}}/40</mat-hint>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="fill" style="margin:4px;">
+        <mat-label>Description</mat-label>
+        <input matInput #description formControlName="description" [ngModel]="server? server.description:''">
+      </mat-form-field>
+      <br>
+      <mat-slide-toggle matInput #backupActive formControlName="backupActive" [ngModel]="server? server.backupActive:''"
+        style="margin:4px;">Backup active</mat-slide-toggle>
+      <mat-form-field appearance="fill" style="margin:4px;">
+        <mat-label>Backup location</mat-label>
+        <input matInput #backupLocation formControlName="backupLocation" [ngModel]="server? server.backupLocation:''"
+          maxlength="200">
+      </mat-form-field>
+      <br>
+      <mat-slide-toggle matInput #autorestartActive formControlName="autorestartActive"
+        [ngModel]="server? server.autorestartActive:''" style="margin:4px;">Auto restart active</mat-slide-toggle>
+      <mat-form-field appearance="fill" style="margin:4px;">
+        <mat-label>Auto restart time</mat-label>
+        <input matInput #autorestartTime formControlName="autorestartTime" type="time"
+          [ngModel]="server? server.autorestartTime:''">
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="fill" style="margin:4px;">
+        <mat-label>Server type</mat-label>
+        <mat-select #serverType formControlName="serverType" [ngModel]="selectedServerType" required>
+          <mat-option *ngFor="let type of serverTypes" [value]="type.title">
+            {{ type.title }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill" style="margin:4px;">
+        <mat-label>Hostname</mat-label>
+        <input matInput #hostname formControlName="hostname" [ngModel]="server? server.hostname:''" maxlength="50">
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="fill" style="margin:4px;">
+        <mat-label>Server install dir</mat-label>
+        <input matInput #serverInstallDir formControlName="serverInstallDir"
+          [ngModel]="server? server.serverInstallDir:''" maxlength="200">
+      </mat-form-field>
+      <mat-form-field appearance="fill" style="margin:4px;">
+        <mat-label>Save dir</mat-label>
+        <input matInput #saveDir formControlName="saveDir" [ngModel]="server? server.saveDir:''" maxlength="200">
+      </mat-form-field>
+      <!-- [ngModel]="server? server.serverEnv:''" -->
+      <div id="envCont" style="display: block;">
+        <div>Server env :</div>
+        <mat-form-field appearance="outline" style="margin:2px;">
+          <mat-label>Env Key</mat-label>
+          <input matInput #key (input)="onNewChange(key, true)">
+        </mat-form-field>
+        <mat-form-field appearance="outline" style="margin:2px;">
+          <mat-label>Env value</mat-label>
+          <input matInput #value (input)="onNewChange(value, false)">
+        </mat-form-field>
+        <div *ngFor="let env of envs">
+          <mat-form-field appearance="outline" style="margin:2px;">
+            <mat-label>Env Key</mat-label>
+            <input matInput [(ngModel)]="env.key" [ngModelOptions]="{standalone: true}" (input)="onChange(env)">
+          </mat-form-field>
+          <mat-form-field appearance="outline" style="margin:2px;">
+            <mat-label>Env value</mat-label>
+            <input matInput [(ngModel)]="env.value" [ngModelOptions]="{standalone: true}" (input)="onChange(env)">
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
   </div>
-</script>
+
+  <div mat-dialog-actions>
+    <button mat-raised-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button type="submit" [mat-dialog-close]="server" [disabled]="!serverForm.valid">Save</button>
+  </div>
+</form>
