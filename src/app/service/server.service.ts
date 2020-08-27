@@ -50,6 +50,13 @@ export class ServerService {
     );
   }
 
+  runAction(id: number, action: string): Observable<any> {
+    const url = this.globals.apiUrl + '/servers/' + id + "/actions/" + action;
+    return this.http.get<any>(url).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       console.error('An error occurred:', error.error.message);

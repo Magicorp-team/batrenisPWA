@@ -1,20 +1,44 @@
 <div class="page-content">
   <section *ngIf="server">
-      <div class="label">Id du serveur : {{ server.id }}</div>
-      <div class="label">Nom du serveur : {{ server.name }}</div>
-      <div class="label">Description du serveur : {{ server.description }}</div>
-      <div class="label">Host du serveur : {{ server.hostname }}</div>
-      <div class="label">Backup activer : {{ server.backupActive }}</div>
-      <div class="label">Auto redémarage activer : {{ server.autorestartActive }}</div>
-      <div class="label">Poucentage CPU : </div>
-      <div class="label">Pourcentage RAM : </div>
-      <div class="label">RAM en octets : </div>
-      <div class="label">Heurs du redémarrage automatique : {{ server.autorestartTime }}</div>
-      <button mat-raised-button>Start</button>
-      <button mat-raised-button>Stop</button>
+      <div class="label">Server id : {{ server.id }}</div>
+      <div class="label">Server title : {{ server.title }}</div>
+      <div class="label">Server name : {{ server.name }}</div>
+      <div class="label">Server description : {{ server.description }}</div>
+      <div class="label">Server hostname : {{ server.hostname }}</div>
+      <div class="label">Server backup : {{ server.backupActive }}</div>
+      <div class="label">Server backup location : {{ server.backupLocation }}</div>
+      <div class="label">Server auto restart active : {{ server.autorestartActive }}</div>
+      <div class="label">Server auto restart time : {{ server.autorestartTime }}</div>
+      <div class="label">Server type : {{ server.type }}</div>
+      <div class="label">Server type : {{ server.type }}</div>
+      <div class="label">Server managers : <span *ngFor="let manager of server.managers">{{ manager.username }} | admins</span></div>
+      <div class="label">Status : </div>
+      <div class="label">CPU : </div>
+      <div class="label">RAM : </div>
+      <div class="label">RAM in bits : </div>
+      <div class="label">Nb players : </div>
+      <h1>Server actions :</h1>
+      <div>
+        <button mat-raised-button *ngFor="let action of server.actions" (click)="runAction(action.name)" aria-label="Server {{ action.name }} action">{{ action.title }}</button>
+      </div>
       <h1>Serveur status : </h1>
       <h1>Action msg : </h1>
       <button mat-raised-button color="warn" (click)="deleteServer(server)" aria-label="Delete server">Remove server</button>
       <button mat-raised-button (click)="editServer(server)" aria-label="Edit server">Edit server</button>
+      <h1>Terminals</h1>
+      <section>
+        <h2>Action terminal :</h2>
+        <p>Terminal status : {{ actionStatus }}</p>
+        <pre class="terminal" #actionTerminalElm [innerHTML]="actionTerminal"></pre>
+      </section>
+      <section>
+        <h2>Server terminal :</h2>
+        <p>Terminal status : {{ serverStatus }}</p>
+        <pre class="terminal" #serverTerminalElm [innerHTML]="serverTerminal"></pre>
+        <input type="text" [(ngModel)]="cmd" placeholder="cmd">
+        <button type="button" (click)="sendCmd()" title="Send command">
+          Send command
+        </button>
+      </section>
   </section>
 </div>
