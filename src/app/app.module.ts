@@ -29,7 +29,6 @@ import { AuthInterceptor } from './auth.interceptor';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './modules/app-routing.module';
-import { Globals } from './globals'
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -91,7 +90,7 @@ import { DialogConfirmComponent } from './dialog-confirm/dialog-confirm.componen
     MatTooltipModule
   ],
   providers: [
-    Globals, {
+    {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true

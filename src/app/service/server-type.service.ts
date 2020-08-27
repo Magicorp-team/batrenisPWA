@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Globals } from '../globals';
+import { environment } from './../../environments/environment';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { throwError, Observable } from 'rxjs';
 import { ServerType } from '../class/server-type';
@@ -11,19 +11,18 @@ import { catchError } from 'rxjs/operators';
 export class ServerTypeService {
 
   constructor(
-    public globals: Globals,
     private http: HttpClient
   ) { }
 
   getServerTypes(): Observable<ServerType[]> {
-    const url = this.globals.apiUrl + '/types';
+    const url = environment.apiUrl + '/types';
     return this.http.get<ServerType[]>(url).pipe(
       catchError(this.handleError)
     );
   }
 
   createServerType(type: ServerType) {
-    const url = this.globals.apiUrl + '/types';
+    const url = environment.apiUrl + '/types';
     return this.http.post<ServerType>(url, {
       title: type.title
     }).pipe(
@@ -32,7 +31,7 @@ export class ServerTypeService {
   }
 
   deleteServerType(type: ServerType) {
-    const url = this.globals.apiUrl + '/types/' + type.id;
+    const url = environment.apiUrl + '/types/' + type.id;
     return this.http.delete<ServerType>(url).pipe(
       catchError(this.handleError)
     );

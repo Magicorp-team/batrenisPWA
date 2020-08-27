@@ -7,7 +7,7 @@ import { ServerService } from '../service/server.service';
 import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ServerFormComponent } from '../server-form/server-form.component';
-import { Globals } from '../globals';
+import { environment } from './../../environments/environment';
 import { AuthService } from '../service/auth.service';
 declare const AnsiUp: any;
 
@@ -40,7 +40,6 @@ export class ServerComponent implements OnInit, AfterViewChecked {
   constructor(
     private route: ActivatedRoute,
     private auth: AuthService,
-    private globals: Globals,
     public dialog: MatDialog,
     private location: Location,
     private serverService: ServerService,
@@ -58,7 +57,7 @@ export class ServerComponent implements OnInit, AfterViewChecked {
       if (!this.serverWs) {
         this.serverStatus = "Connecting...";
         this.serverWs = new WebSocket(
-          this.globals.wsServer + "/servers/" + this.server.id + "/terminal",
+          environment.wsServer + "/servers/" + this.server.id + "/terminal",
           this.auth.getToken()/*,
           { headers: { Authorization: this.auth.getToken() } }*/
         );
@@ -152,7 +151,7 @@ export class ServerComponent implements OnInit, AfterViewChecked {
   attachToActionTerminal() {
     this.actionStatus = "Connecting...";
     this.actionWs = new WebSocket(
-      this.globals.wsServer + "/servers/" + this.server.id + "/actions/terminal",
+      environment.wsServer + "/servers/" + this.server.id + "/actions/terminal",
       this.auth.getToken()/*,
       { headers: { Authorization: this.auth.getToken() } }*/
     );

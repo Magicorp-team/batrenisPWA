@@ -1,14 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Globals } from '../globals';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(
-    public globals: Globals
-  ) { }
+  constructor() { }
 
   getToken() {
     // Use cookie for store token because localStorage can't be subdomain shared

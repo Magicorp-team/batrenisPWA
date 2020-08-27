@@ -3,7 +3,7 @@ import { User } from '../class/user';
 import { HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Globals } from '../globals';
+import { environment } from './../../environments/environment';
 import { Role } from '../class/role';
 
 @Injectable({
@@ -12,19 +12,18 @@ import { Role } from '../class/role';
 export class UserService {
 
   constructor(
-    public globals: Globals,
     private http: HttpClient
   ) { }
 
   getUsers(): Observable<User[]> {
-    const url = this.globals.apiUrl + '/users';
+    const url = environment.apiUrl + '/users';
     return this.http.get<User[]>(url).pipe(
       catchError(this.handleError)
     );
   }
 
   updateUserRole(user: User) {
-    const url = this.globals.apiUrl + '/users/' + user.id + "/roles";
+    const url = environment.apiUrl + '/users/' + user.id + "/roles";
     return this.http.put<User>(url, {
       roles: user.roles.reduce((acc: Array<Number>, i: Role) => (acc.push(i.id), acc), [])
     }).pipe(

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Globals } from '../globals';
+import { environment } from './../../environments/environment';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -11,12 +11,11 @@ import { Permission } from '../class/permission';
 export class PermissionService {
 
   constructor(
-    public globals: Globals,
     private http: HttpClient
   ) { }
 
   getPermissions(): Observable<Permission[]> {
-    const url = this.globals.apiUrl + '/permissions';
+    const url = environment.apiUrl + '/permissions';
     return this.http.get<Permission[]>(url).pipe(
       catchError(this.handleError)
     );

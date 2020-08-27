@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Globals } from '../globals';
+import { environment } from './../../environments/environment';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Action } from '../class/action';
 import { throwError, Observable } from 'rxjs';
@@ -11,19 +11,18 @@ import { catchError } from 'rxjs/operators';
 export class ActionService {
 
   constructor(
-    public globals: Globals,
     private http: HttpClient
   ) { }
 
   getActions(): Observable<Action[]> {
-    const url = this.globals.apiUrl + '/actions';
+    const url = environment.apiUrl + '/actions';
     return this.http.get<Action[]>(url).pipe(
       catchError(this.handleError)
     );
   }
 
   createAction(action: Action) {
-    const url = this.globals.apiUrl + '/actions';
+    const url = environment.apiUrl + '/actions';
     return this.http.post<Action>(url, {
       title: action.title,
       name: action.name,
@@ -34,7 +33,7 @@ export class ActionService {
   }
 
   updateAction(action: Action) {
-    const url = this.globals.apiUrl + '/actions/' + action.id;
+    const url = environment.apiUrl + '/actions/' + action.id;
     return this.http.put<Action>(url, {
       title: action.title,
       name: action.name,
@@ -45,7 +44,7 @@ export class ActionService {
   }
 
   deleteAction(action: Action) {
-    const url = this.globals.apiUrl + '/actions/' + action.id;
+    const url = environment.apiUrl + '/actions/' + action.id;
     return this.http.delete<Action>(url).pipe(
       catchError(this.handleError)
     );

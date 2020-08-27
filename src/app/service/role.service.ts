@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Role } from '../class/role';
-import { Globals } from '../globals';
+import { environment } from './../../environments/environment';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -12,26 +12,25 @@ import { Permission } from '../class/permission';
 export class RoleService {
 
   constructor(
-    public globals: Globals,
     private http: HttpClient
   ) { }
 
   getRoles(): Observable<Role[]> {
-    const url = this.globals.apiUrl + '/roles';
+    const url = environment.apiUrl + '/roles';
     return this.http.get<Role[]>(url).pipe(
       catchError(this.handleError)
     );
   }
 
   getRole(id: number): Observable<Role> {
-    const url = this.globals.apiUrl + '/roles/' + id;
+    const url = environment.apiUrl + '/roles/' + id;
     return this.http.get<Role>(url).pipe(
       catchError(this.handleError)
     );
   }
 
   createRole(title: string, name: string, description: string, permissions: Permission[]): Observable<Role> {
-    const url = this.globals.apiUrl + '/roles';
+    const url = environment.apiUrl + '/roles';
     return this.http.post<Role>(url, {
       title: title,
       name: name,
@@ -43,7 +42,7 @@ export class RoleService {
   }
 
   updateRole(id: number, title: string, name: string, description: string, permissions: Permission[]): Observable<Role> {
-    const url = this.globals.apiUrl + '/roles/' + id;
+    const url = environment.apiUrl + '/roles/' + id;
     return this.http.put<Role>(url, {
       title: title,
       name: name,
@@ -55,7 +54,7 @@ export class RoleService {
   }
 
   deleteRole(role: Role) {
-    const url = this.globals.apiUrl + '/roles/' + role.id;
+    const url = environment.apiUrl + '/roles/' + role.id;
     return this.http.delete<Role>(url).pipe(
       catchError(this.handleError)
     );

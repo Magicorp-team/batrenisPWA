@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: 'http://api.magicorp.fr/batrenis/v1',
+  wsServer: 'ws://api.magicorp.fr/batrenis/v1',
+  domain: ".magicorp.fr"
 };
 
 /*
