@@ -1,4 +1,5 @@
 <span [ngClass]="{'unicorn-dark-theme': isDarkTheme | async}">
+  <!-- <p>This website use fonctionnai cookie <button onclick="this.parentNode.parentNode.removeChild(this.parentNode);" aria-label="Close cookie alert">X</button></p> -->
   <mat-toolbar color="primary" class="mat-elevation-z2">
     <button mat-icon-button aria-label="Main menu icon" (click)="drawer.toggle()">
       <mat-icon>menu</mat-icon>
@@ -26,7 +27,6 @@
         <a mat-list-item *ngIf="authService.getToken()" href="https://www.magicorp.fr/signout" routerLinkActive="active">Sign out</a>
       </mat-nav-list>
     </mat-drawer>
-    <p>This website use fonctionnai cookie <button onclick="this.parentNode.parentNode.removeChild(this.parentNode);">X</button></p>
     <router-outlet></router-outlet>
   </mat-drawer-container>
 </span>

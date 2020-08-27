@@ -45,7 +45,7 @@ export class ServersComponent implements OnInit {
     );
   }
 
-  openActionDialog() {
+  addServer() {
     this.dialog.open(ServerFormComponent).afterClosed().subscribe(newServer => {
       if (newServer) this.getServers();
     });

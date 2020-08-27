@@ -26,6 +26,27 @@ export class ServerService {
     const url = this.globals.apiUrl + '/servers';
     return this.http.post<Server>(url, server).pipe(
       catchError(this.handleError)
+      );
+    }
+
+  getServer(id: number): Observable<Server> {
+    const url = this.globals.apiUrl + '/servers/' + id;
+    return this.http.get<Server>(url).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  updateServer(server: Server): Observable<Server> {
+    const url = this.globals.apiUrl + '/servers/' + server.id;
+    return this.http.put<Server>(url, server).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  deleteServer(server: Server) {
+    const url = this.globals.apiUrl + '/servers/' + server.id;
+    return this.http.delete<Server>(url).pipe(
+      catchError(this.handleError)
     );
   }
 

@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Confirm</h1>
+<div mat-dialog-content>
+  <pre>{{ msg }}</pre>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button mat-dialog-close aria-label="No">No</button>
+  <button mat-raised-button [mat-dialog-close]="true" color="warn" aria-label="Yes">Yes</button>
+</div>

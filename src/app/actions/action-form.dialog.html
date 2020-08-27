@@ -17,7 +17,7 @@
     </mat-form-field>
   </div>
   <div mat-dialog-actions>
-    <button mat-raised-button mat-dialog-close>Cancel</button>
-    <button mat-raised-button type="submit" [mat-dialog-close]="data" [disabled]="!actionForm.valid" cdkFocusInitial>Save</button>
+    <button mat-raised-button mat-dialog-close aria-label="Cancel">Cancel</button>
+    <button mat-raised-button type="submit" [mat-dialog-close]="data" [disabled]="!actionForm.valid" aria-label="Save" cdkFocusInitial>Save</button>
   </div>
 </form>

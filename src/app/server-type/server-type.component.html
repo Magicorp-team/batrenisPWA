@@ -4,7 +4,7 @@
     <input matInput #title formControlName="title" minLength="1" maxlength="40" required>
     <mat-hint align="end">{{title.value?.length || 0}}/40</mat-hint>
   </mat-form-field>
-  <button mat-raised-button type="submit" [disabled]="!serverTypeForm.valid">Save</button>
+  <button mat-raised-button type="submit" [disabled]="!serverTypeForm.valid" aria-label="Save">Save</button>
 </form>
 <mat-list>
   <mat-list-item *ngFor="let serverType of serverTypes" style="margin:16px;">
@@ -14,7 +14,7 @@
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #typeMoreMenu="matMenu" xPosition="before" yPosition="below" width="1">
-      <button mat-menu-item (click)="deleteServerType(serverType)">
+      <button mat-menu-item (click)="deleteServerType(serverType)" aria-label="Delete">
         <mat-icon>delete_forever</mat-icon>
         <span>Delete</span>
       </button>

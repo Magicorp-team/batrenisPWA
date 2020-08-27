@@ -7,6 +7,8 @@ import { PermissionService } from '../service/permission.service'
 import { User } from '../class/user';
 import { Role } from '../class/role';
 import { Permission } from '../class/permission';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component';
 
 @Component({
   selector: 'app-roles',
@@ -29,6 +31,7 @@ export class RolesComponent implements OnInit {
   });
 
   constructor(
+    public dialog: MatDialog,
     private userService: UserService,
     private roleService: RoleService,
     private permissionService: PermissionService,
@@ -130,13 +133,20 @@ export class RolesComponent implements OnInit {
   }
 
   deleteRole(role: Role): void {
-    this.roleService.deleteRole(role).subscribe(
-      _ => {
-        this.getRoles();
-        this.openSnackBar("Role deleted with success", "ok");
-      },
-      error => this.openSnackBar(`Error on delete role (${error})`, "ok")
-    );
+    this.dialog.open(DialogConfirmComponent, {
+      data: {
+        msg: 'Warning!\nDo you want delete ' + role.title + '?'
+      }
+    }).afterClosed().subscribe(isYes => {
+      if (isYes)
+        this.roleService.deleteRole(role).subscribe(
+          _ => {
+            this.getRoles();
+            this.openSnackBar("Role deleted with success", "ok");
+          },
+          error => this.openSnackBar(`Error on delete role (${error})`, "ok")
+        );
+    });
   }
 
   compareObjects(o1: any, o2: any): boolean {

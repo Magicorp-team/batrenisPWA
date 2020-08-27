@@ -49,8 +49,8 @@
           <mat-label>Role description</mat-label>
           <input matInput #description formControlName="description" [ngModel]="selectedRole? selectedRole.description:''">
         </mat-form-field>
-        <button mat-raised-button type="submit" [disabled]="!roleForm.valid">Save</button>
-        <button mat-raised-button type="button" color="warn" style="margin:0 4px;" *ngIf="selectedRole" (click)="deleteRole(selectedRole)">Delete</button>
+        <button mat-raised-button type="submit" [disabled]="!roleForm.valid" aria-label="Save">Save</button>
+        <button mat-raised-button type="button" color="warn" style="margin:0 4px;" *ngIf="selectedRole" (click)="deleteRole(selectedRole)" aria-label="Delete">Delete</button>
       </form>
       <mat-label>Permissions :</mat-label>
       <mat-nav-list>

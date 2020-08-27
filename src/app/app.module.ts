@@ -42,6 +42,7 @@ import { ServerFormComponent } from './server-form/server-form.component';
 import { ServerTypeComponent } from './server-type/server-type.component';
 import { ActionsComponent, ActionFormDialog } from './actions/actions.component';
 import { ManageComponent } from './manage/manage.component';
+import { DialogConfirmComponent } from './dialog-confirm/dialog-confirm.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { ManageComponent } from './manage/manage.component';
     ServerTypeComponent,
     ActionsComponent,
     ActionFormDialog,
-    ManageComponent
+    ManageComponent,
+    DialogConfirmComponent
   ],
   imports: [
     AppRoutingModule,

@@ -45,8 +45,8 @@
     <div>
       <mat-form-field appearance="fill" style="margin:4px;">
         <mat-label>Server type</mat-label>
-        <mat-select #serverType formControlName="serverType" [ngModel]="selectedServerType" required>
-          <mat-option *ngFor="let type of serverTypes" [value]="type.id">
+        <mat-select [compareWith]="compareNameObjects" formControlName="serverType" [ngModel]="server? server.type:''" required>
+          <mat-option *ngFor="let type of serverTypes" [value]="type">
             {{ type.title }}
           </mat-option>
         </mat-select>
@@ -73,7 +73,6 @@
         <input matInput #autorestartTime formControlName="autorestartTime" type="time"
           [ngModel]="server? server.autorestartTime:''">
       </mat-form-field>
-      <!-- [ngModel]="server? server.serverEnv:''" -->
       <div id="envCont" style="display: block;">
         <div>Server env :</div>
         <mat-form-field appearance="outline" style="margin:2px;">
@@ -99,7 +98,7 @@
   </div>
 
   <div mat-dialog-actions>
-    <button mat-raised-button mat-dialog-close>Cancel</button>
-    <button mat-raised-button type="submit" [disabled]="!serverForm.valid">Save</button>
+    <button mat-raised-button mat-dialog-close aria-label="Cancel">Cancel</button>
+    <button mat-raised-button type="submit" [disabled]="!serverForm.valid" aria-label="Save">Save</button>
   </div>
 </form>

@@ -1,9 +1,9 @@
-<div>
-  <section>
-      <div class="label">Id du serveur : {{ id }}</div>
+<div class="page-content">
+  <section *ngIf="server">
+      <div class="label">Id du serveur : {{ server.id }}</div>
       <div class="label">Nom du serveur : {{ server.name }}</div>
       <div class="label">Description du serveur : {{ server.description }}</div>
-      <div class="label">Host du serveur : {{ server.hostnameIp }}</div>
+      <div class="label">Host du serveur : {{ server.hostname }}</div>
       <div class="label">Backup activer : {{ server.backupActive }}</div>
       <div class="label">Auto redémarage activer : {{ server.autorestartActive }}</div>
       <div class="label">Poucentage CPU : </div>
@@ -14,7 +14,7 @@
       <button mat-raised-button>Stop</button>
       <h1>Serveur status : </h1>
       <h1>Action msg : </h1>
-      <button mat-raised-button>Remove server</button>
-      <button mat-raised-button>Edit server</button>
+      <button mat-raised-button color="warn" (click)="deleteServer(server)" aria-label="Delete server">Remove server</button>
+      <button mat-raised-button (click)="editServer(server)" aria-label="Edit server">Edit server</button>
   </section>
 </div>

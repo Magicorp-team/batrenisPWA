@@ -13,7 +13,7 @@
     <mat-label>Action description</mat-label>
     <input matInput #description formControlName="description" minLength="1">
   </mat-form-field>
-  <button mat-raised-button type="submit" [disabled]="!actionForm.valid">Save</button>
+  <button mat-raised-button type="submit" [disabled]="!actionForm.valid" aria-label="Save">Save</button>
 </form>
 <mat-list>
   <mat-list-item *ngFor="let action of actions" style="margin:16px;">
@@ -27,11 +27,11 @@
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #actionMoreMenu="matMenu" xPosition="before" yPosition="below" width="1">
-      <button mat-menu-item (click)="openActionDialog(action)">
+      <button mat-menu-item (click)="openActionDialog(action)" aria-label="Edit">
         <mat-icon>edit</mat-icon>
         <span>Edit</span>
       </button>
-      <button mat-menu-item (click)="deleteAction(action)">
+      <button mat-menu-item (click)="deleteAction(action)" aria-label="Delete">
         <mat-icon>delete_forever</mat-icon>
         <span>Delete</span>
       </button>
