@@ -23,7 +23,7 @@
         <a mat-list-item href="https://www.magicorp.fr" routerLinkActive="active">Magicorp</a>
         <a mat-list-item href="https://code.magicorp.fr" routerLinkActive="active">Code</a>
         <mat-divider></mat-divider>
-        <a mat-list-item *ngIf="!authService.getToken()" href="https://www.magicorp.fr/signin" routerLinkActive="active">Sign in</a>
+        <a mat-list-item *ngIf="!authService.getToken()" href="https://www.magicorp.fr/signin{{ lastUrl? lastUrl : '' }}" routerLinkActive="active">Sign in</a>
         <a mat-list-item *ngIf="authService.getToken()" href="https://www.magicorp.fr/signout" routerLinkActive="active">Sign out</a>
       </mat-nav-list>
     </mat-drawer>
