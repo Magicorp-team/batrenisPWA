@@ -2,7 +2,7 @@
   <mat-grid-list cols="5" rowHeight="20:10">
     <mat-grid-tile class="servercard" *ngFor="let server of servers" [colspan]="1" [rowspan]="1" (click)="router.navigate(['/server/' + server.id])">
       <h2 class="servertitle">{{ server.title }}</h2>
-      <span class="{{ server.status == 'active'? 'serveron' : 'serveroff' }}"></span>
+      <span class="{{ server.status == 'up'? 'serveron' : 'serveroff' }}"></span>
       <p>{{ server.description }}</p>
     </mat-grid-tile>
   </mat-grid-list>

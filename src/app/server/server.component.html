@@ -10,12 +10,11 @@
       <div class="label">Server auto restart active : {{ server.autorestartActive }}</div>
       <div class="label">Server auto restart time : {{ server.autorestartTime }}</div>
       <div class="label">Server type : {{ server.type }}</div>
-      <div class="label">Server type : {{ server.type }}</div>
       <div class="label">Server managers : <span *ngFor="let manager of server.managers">{{ manager.username }} | admins</span></div>
-      <div class="label">Status : </div>
+      <div class="label">Server status : {{ server.status }}</div>
       <div class="label">CPU : </div>
       <div class="label">RAM : </div>
-      <div class="label">RAM in bits : </div>
+      <div class="label">RAM in bytes : </div>
       <div class="label">Nb players : </div>
       <h1>Server actions :</h1>
       <div>
